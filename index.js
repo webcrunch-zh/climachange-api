@@ -68,10 +68,12 @@ app.get ('/company/:id*', (req,res) => {
 
 
 
-app.get ('/jobs/:pages*', (req,res) => {
+app.get ('/jobs/:output*/:pages*', (req,res) => {
         
-       const page = req.params['pages']
-        const results_per_page = 33;
+        const page = req.params['pages']
+        const output = req.params['output']
+
+        const results_per_page = output;
         const page_first_result = page * results_per_page;  
 
         
