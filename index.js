@@ -131,7 +131,7 @@ app.get ('/random/:limit*', (req,res) => {
         
         connection.getConnection(function(err, connection) {
 
-                        connection.query("SELECT * FROM companys_ch ORDER BY RAND() LIMIT " + limit , function (err, result, fields) {
+                        connection.query("SELECT * FROM jobs_ch ORDER BY RAND() LIMIT " + limit , function (err, result, fields) {
                                 
                                 res.json(result)
 
@@ -140,15 +140,30 @@ app.get ('/random/:limit*', (req,res) => {
                        
                 });
 
+      
+})
 
 
 
+app.get ('/search/:phrase*', (req,res) => {
 
-       
-                
         
+
+        const phrase = req.params['phrase']
         
-        
+        connection.getConnection(function(err, connection) {
+
+                        connection.query("SELECT * FROM jobs_ch  WHERE title LIKE '%" + phrase +"' "         , function (err, result, fields) {
+                                
+                                console.log(phrase)
+                                res.json(result)
+
+                        });
+                        connection.release()
+                       
+                });
+
+      
 })
 
 
