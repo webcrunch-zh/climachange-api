@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/webcrunch-zh/climachange-api#readme",
   "dependencies": {
-    "axios": "^0.25.0",
-    "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15"

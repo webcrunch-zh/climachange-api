@@ -1,21 +1,19 @@
-const PORT = 8000
+const PORT = 5000
 const express = require('express')
-const axios = require('axios');
-const cheerio = require('cheerio');
 const mysql = require('mysql');
 const { response } = require('express');
 const app = express();
 
 
 
-// const connection = mysql.createPool({
-//         connectionLimit: 5,
-//     host: 'localhost',
-//     port: 8889,
-//     user: 'root',
-//     password: 'root',
-//     database: 'crawl_jobs'
-// });
+const connection = mysql.createPool({
+        connectionLimit: 5,
+    host: 'webcrunch-jobs.cic82xyjeh20.us-east-1.rds.amazonaws.com',
+    port: 3306,
+    user: 'admin',
+    password: '15261712',
+    database: 'crawler'
+});
 
 
 
@@ -30,77 +28,96 @@ app.get ('/', (req,res) => {
 app.get ('/job/:id*', (req,res) => {
         
         const id = req.params['id']
-        axios.get('https://www.jobs.ch/api/v1/public/search/job/' + id ).then ( (response) => {
-                
-                const json = response.data
-                res.json(json)
-        }).catch ( (err) =>
-                res.json(err) 
-        )
+
+
+        
+
+        connection.getConnection(function(err, connection) {
+
+                        connection.query("SELECT * FROM jobs_ch WHERE job_id LIKE " + id + "  " , function (err, result, fields) {
+                                
+                                res.json(result)
+
+                        });
+                        connection.release()
+                       
+                });
+
+
+        
+
+        
 })
 
 
 app.get ('/company/:id*', (req,res) => {
         
         const id = req.params['id']
-        axios.get('https://www.jobs.ch/api/v1/public/company/' + id ).then ( (response) => {
-                
-                const json = response.data
-                res.json(json)
-        }).catch ( (err) =>
-                res.json(err) 
-        )
+        
+        connection.getConnection(function(err, connection) {
+
+                        connection.query("SELECT * FROM companys_ch WHERE company_id LIKE " + id + "  " , function (err, result, fields) {
+                                
+                                res.json(result)
+
+                        });
+                        connection.release()
+                       
+                });
 }) 
-// app.get ('/jobs/:pages*', (req,res) => {
+
+
+
+app.get ('/jobs/:pages*', (req,res) => {
         
-//        const page = req.params['pages']
-//         const results_per_page = 33;
-//         const page_first_result = page * results_per_page;  
+       const page = req.params['pages']
+        const results_per_page = 33;
+        const page_first_result = page * results_per_page;  
 
         
-//         // Get total number of pages
-//         const query = "SELECT * FROM jobs_ch";  
-//         const result = connection.query(connection, query);  
+        // Get total number of pages
+        const query = "SELECT * FROM jobs_ch";  
+        const result = connection.query(connection, query);  
         
 
-//                 connection.getConnection(function(err, connection) {
+                connection.getConnection(function(err, connection) {
 
-//                         connection.query("SELECT * FROM jobs_ch", function (err, result, fields) {
-//                                 const number_of_result = result.length;
-//                                 const number_of_page = Math.ceil(number_of_result / results_per_page) - 1; 
-//                                 console.log(number_of_page) 
+                        connection.query("SELECT * FROM jobs_ch", function (err, result, fields) {
+                                const number_of_result = result.length;
+                                const number_of_page = Math.ceil(number_of_result / results_per_page) - 1; 
+                                console.log(number_of_page) 
 
-//                         });
-//                         connection.release()
+                        });
+                        connection.release()
                        
-//                 });
+                });
                 
-//         const final_query = "SELECT * FROM jobs_ch LIMIT " + page_first_result + ", " + results_per_page ;    
+        const final_query = "SELECT * FROM jobs_ch LIMIT " + page_first_result + ", " + results_per_page ;    
 
 
 
 
 
 
-//         connection.getConnection(function(err, connection) {
+        connection.getConnection(function(err, connection) {
 
-//                         connection.query(final_query, function (err, result, fields) {
-//                                 if (result.length > 0) {
-//                                         console.log(result)
-//                                         res.json(result)
-//                                 } else {
-//                                         res.json('Out of Range')
-//                                 }
+                        connection.query(final_query, function (err, result, fields) {
+                                if (result.length > 0) {
+                                        console.log(result)
+                                        res.json(result)
+                                } else {
+                                        res.json('Out of Range')
+                                }
 
-//                         });
-//                         connection.release()
+                        });
+                        connection.release()
                        
-//                 });
+                });
                 
         
         
         
-// })
+})
 
 
 
