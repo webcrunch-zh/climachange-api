@@ -153,7 +153,7 @@ app.get ('/search/:phrase*', (req,res) => {
         
         connection.getConnection(function(err, connection) {
 
-                        connection.query("SELECT * FROM jobs_ch  WHERE title LIKE '%" + phrase +"' "         , function (err, result, fields) {
+                        connection.query("SELECT * FROM jobs_ch  WHERE title LIKE '%" + phrase +"%' "         , function (err, result, fields) {
                                 
                                 console.log(phrase)
                                 res.json(result)
