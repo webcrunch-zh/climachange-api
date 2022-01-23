@@ -77,6 +77,7 @@ app.get ('/jobs/:output*/:pages*', (req,res) => {
         const page_first_result = page * results_per_page;  
 
         
+
         // Get total number of pages
         const query = "SELECT * FROM jobs_ch";  
         const result = connection.query(connection, query);  
@@ -115,6 +116,35 @@ app.get ('/jobs/:output*/:pages*', (req,res) => {
                         connection.release()
                        
                 });
+                
+        
+        
+        
+})
+
+
+app.get ('/random/:limit*', (req,res) => {
+
+        
+
+        const limit = req.params['limit']
+        
+        connection.getConnection(function(err, connection) {
+
+                        connection.query("SELECT * FROM companys_ch ORDER BY RAND() LIMIT " + limit , function (err, result, fields) {
+                                
+                                res.json(result)
+
+                        });
+                        connection.release()
+                       
+                });
+
+
+
+
+
+       
                 
         
         
