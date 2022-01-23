@@ -104,4 +104,4 @@ app.get ('/company/:id*', (req,res) => {
 
 
 
-app.listen(PORT, () => console.log('Job APII is up and running')) 
+app.listen(process.env.PORT || 5000, () => console.log('Job APII is up and running')) 
