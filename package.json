@@ -1,0 +1,26 @@
+{
+  "name": "climachange-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webcrunch-zh/climachange-api.git"
+  },
+  "author": "Demian Füglistaler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webcrunch-zh/climachange-api/issues"
+  },
+  "homepage": "https://github.com/webcrunch-zh/climachange-api#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.17.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  }
+}
