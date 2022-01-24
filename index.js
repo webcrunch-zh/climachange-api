@@ -182,7 +182,9 @@ app.get ('/jobs/total', (req,res) => {
 
                         connection.query(query , function (err, result, fields) {
                                 
-                                res.json(result.length)
+                                res.json({
+                                        'total': result.length
+                                })
 
                         });
                         connection.release()
