@@ -84,13 +84,12 @@ app.get ('/jobs/:output*/:pages*', (req,res) => {
         
 
         // Get total number of pages
-        const query = "SELECT * FROM jobs_ch";  
-        const result = connection.query(connection, query);  
+        
         
 
                 connection.getConnection(function(err, connection) {
 
-                        connection.query("SELECT * FROM jobs_ch", function (err, result, fields) {
+                        connection.query("SELECT * FROM jobs_ch ORDER BY initial_publication_date ", function (err, result, fields) {
                                 const number_of_result = result.length;
                                 const number_of_page = Math.ceil(number_of_result / results_per_page) - 1; 
                                 console.log(number_of_page) 
