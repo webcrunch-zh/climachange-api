@@ -173,7 +173,7 @@ app.get ('/search/:phrase*', (req,res) => {
 
 
 
-app.get ('/total', (req,res) => {
+app.get ('/jobs/total', (req,res) => {
         
 
         const query = "SELECT * FROM jobs_ch";
