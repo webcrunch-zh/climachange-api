@@ -214,4 +214,26 @@ app.get ('/industry/:id*/:limit*/', (req,res) => {
                 });
 }) 
 
+
+
+app.get ('/cat/:id*/:limit*/', (req,res) => {
+        
+
+        const id = req.params['id']
+        const limit = req.params['limit']
+
+        const query = "SELECT * FROM jobs_ch WHERE cat_1 = " + id +" ORDER BY RAND() LIMIT " + limit    ;
+        
+        connection.getConnection(function(err, connection) {
+
+                        connection.query(query , function (err, result, fields) {
+                                
+                                res.json(result)
+
+                        });
+                        connection.release()
+                       
+                });
+}) 
+
 app.listen(process.env.PORT || 5000, () => console.log('Job APII is up and running')) 
