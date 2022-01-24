@@ -89,7 +89,7 @@ app.get ('/jobs/:output*/:pages*', (req,res) => {
 
                 connection.getConnection(function(err, connection) {
 
-                        connection.query("SELECT * FROM jobs_ch ORDER BY initial_publication_date ", function (err, result, fields) {
+                        connection.query("SELECT * FROM jobs_ch", function (err, result, fields) {
                                 const number_of_result = result.length;
                                 const number_of_page = Math.ceil(number_of_result / results_per_page) - 1; 
                                 console.log(number_of_page) 
@@ -99,7 +99,7 @@ app.get ('/jobs/:output*/:pages*', (req,res) => {
                        
                 });
                 
-        const final_query = "SELECT * FROM jobs_ch LIMIT " + page_first_result + ", " + results_per_page ;    
+        const final_query = "SELECT * FROM jobs_ch ORDER BY initial_publication_date DESC LIMIT " + page_first_result + ", " + results_per_page ;    
 
 
 
