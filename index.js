@@ -70,7 +70,12 @@ app.get ('/company/:id*', (req,res) => {
 
 app.get ('/jobs/:output*/:pages*', (req,res) => {
         
-        const page = req.params['pages']
+        let page = req.params['pages']
+
+
+        
+
+
         const output = req.params['output']
 
         const results_per_page = output;
@@ -167,5 +172,22 @@ app.get ('/search/:phrase*', (req,res) => {
 })
 
 
+
+app.get ('/total', (req,res) => {
+        
+
+        const query = "SELECT * FROM jobs_ch";
+        
+        connection.getConnection(function(err, connection) {
+
+                        connection.query(query , function (err, result, fields) {
+                                
+                                res.json(result.length)
+
+                        });
+                        connection.release()
+                       
+                });
+}) 
 
 app.listen(process.env.PORT || 5000, () => console.log('Job APII is up and running')) 
