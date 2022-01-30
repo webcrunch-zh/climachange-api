@@ -235,4 +235,45 @@ app.get ('/cat/:id*/:limit*/', (req,res) => {
                 });
 }) 
 
+
+
+app.get ('/jobs/total', (req,res) => {
+        
+
+        const query = "SELECT * FROM jobs_ch";
+        
+        connection.getConnection(function(err, connection) {
+
+                        connection.query(query , function (err, result, fields) {
+                                
+                                res.json({
+                                        'total': result.length
+                                })
+
+                        });
+                        connection.release()
+                       
+                });
+}) 
+
+app.get ('/cat/group/', (req,res) => {
+        
+
+        const query = "SELECT industry_id FROM jobs_ch GROUP BY industry_id ORDER BY industry_id DESC";
+        
+        connection.getConnection(function(err, connection) {
+
+                const newArray = [];
+                        connection.query(query , function (err, result, fields) {
+                                
+                        res.json(result)
+
+                        });
+
+                        connection.release()
+                       
+                });
+}) 
+
+
 app.listen(process.env.PORT || 5000, () => console.log('Job APII is up and running')) 
